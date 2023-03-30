@@ -117,7 +117,7 @@ public class QLMaze : MonoBehaviour
         }
         else
         {
-            return GetBestAction();
+            return GetBestAction(current_pos);
         }
     }
 
@@ -129,24 +129,24 @@ public class QLMaze : MonoBehaviour
         return GetNextPosition(current_pos, available_actions[random_index]);
     }
 
-    Tuple<int, int> GetBestAction()
+    Tuple<int, int> GetBestAction(Tuple<int, int> curr_pos)
     {
         // Choose action with highest Q-value among available actions
         List<string> available_actions =
-        GetAvailableActions(current_pos);
+        GetAvailableActions(curr_pos);
         string best_action = "";
         float best_q_value = float.NegativeInfinity;
         foreach (string action in available_actions)
         {
-            Tuple<int, int> next_pos = GetNextPosition(current_pos, action);
-            float q_value = GetQValue(ConvertTupleToString(current_pos), action);
+            Tuple<int, int> next_pos = GetNextPosition(curr_pos, action);
+            float q_value = GetQValue(ConvertTupleToString(curr_pos), action);
             if (q_value > best_q_value)
             {
                 best_action = action;
                 best_q_value = q_value;
             }
         }
-        return GetNextPosition(current_pos, best_action);
+        return GetNextPosition(curr_pos, best_action);
     }
 
     List<string> GetAvailableActions(Tuple<int, int> pos)
@@ -233,16 +233,16 @@ public class QLMaze : MonoBehaviour
     void UpdateQTable(Tuple<int, int> state, Tuple<int, int> next_state, float reward)
     {
         // Update Q-table using Q-learning algorithm
-        string qKey = GetProjectedDirection(state, GetBestAction());
+        string qKey = GetProjectedDirection(state, GetBestAction(current_pos));
         if (qKey == PANIC)
             return;
         float q_value = GetQValue(ConvertTupleToString(state), qKey);
-        qKey = GetProjectedDirection(next_state, GetBestAction());
+        qKey = GetProjectedDirection(next_state, GetBestAction(next_state));
         if (qKey == PANIC)
             return;
         float max_q_value = GetQValue(ConvertTupleToString(next_state), qKey);
         float updated_q_value = q_value + learning_rate * (reward + discount_factor * max_q_value - q_value);
-        q_table[ConvertTupleToString(state)][GetProjectedDirection(state, GetBestAction())] = updated_q_value;
+        q_table[ConvertTupleToString(state)][GetProjectedDirection(state, GetBestAction(current_pos))] = updated_q_value;
     }
 
     // Parse the direction based on the next move
