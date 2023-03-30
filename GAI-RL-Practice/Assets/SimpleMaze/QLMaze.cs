@@ -32,7 +32,7 @@ public class QLMaze : MonoBehaviour
     /* ASSIGNMENT: only call Update() x times per second */
 
     // Episode regulation variables
-    int max_steps = 1000;
+    int max_steps = 100;
     int curr_step = 0;
 
     void Start()
@@ -239,6 +239,8 @@ public class QLMaze : MonoBehaviour
 
     // Parse the direction based on the next move
     string GetProjectedDirection(Tuple<int, int> curr, Tuple<int, int> best_action) {
+        Debug.Log($"{ConvertTupleToString(curr)}-{ConvertTupleToString(best_action)}");
+
         int sx = curr.Item1;
         int sz = curr.Item2;
 
@@ -262,7 +264,9 @@ public class QLMaze : MonoBehaviour
             return "up";
         }
 
-        return "panic";  // this will break things
+        // Something has gone wrong
+        Debug.Log("panic");
+        return "panic";
     }
 
     // Turns out that you can't use tuples as hash values / keys or things break
