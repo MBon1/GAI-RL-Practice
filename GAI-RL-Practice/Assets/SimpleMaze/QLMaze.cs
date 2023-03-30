@@ -37,6 +37,10 @@ public class QLMaze : MonoBehaviour
     int max_steps = 500;
     int curr_step = 0;
 
+    // Iterations
+    public int max_iterations = 20;
+    int curr_iterations = 0;
+
     void Start()
     {
         // Initialize maze variables
@@ -77,6 +81,10 @@ public class QLMaze : MonoBehaviour
 
     void Update()
     {
+        if (max_iterations <= curr_iterations)
+        {
+            return;
+        }
         // Update agent position and Q-learning table
         Tuple<int, int> next_pos = ChooseAction();
         float reward = GetReward(next_pos);
@@ -105,6 +113,7 @@ public class QLMaze : MonoBehaviour
         {
             curr_step = 0;
             current_pos = new Tuple<int, int>(0, 0);
+            curr_iterations++;
         }
     }
 
@@ -247,7 +256,7 @@ public class QLMaze : MonoBehaviour
 
     // Parse the direction based on the next move
     string GetProjectedDirection(Tuple<int, int> curr, Tuple<int, int> best_action) {
-        Debug.Log($"{ConvertTupleToString(curr)}-{ConvertTupleToString(best_action)}");
+        //Debug.Log($"{ConvertTupleToString(curr)}-{ConvertTupleToString(best_action)}");
 
         int sx = curr.Item1;
         int sz = curr.Item2;
@@ -273,7 +282,7 @@ public class QLMaze : MonoBehaviour
         }
 
         // Something has gone wrong
-        Debug.Log(PANIC);
+        //Debug.Log(PANIC);
         return PANIC;
     }
 
