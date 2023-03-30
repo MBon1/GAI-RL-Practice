@@ -6,7 +6,8 @@ using UnityEngine;
 public class QLMaze : MonoBehaviour
 {
     // Q-learning variables
-    private Dictionary<Tuple<int, int>, Dictionary<string, float>> q_table;
+    // private Dictionary<Tuple<int, int>, Dictionary<string, float>> q_table;  // lmao this did not work
+    private Dictionary<string, Dictionary<string, float>> q_table;
     private float learning_rate = 0.8f;
     private float discount_factor = 0.95f;
     private float exploration_rate = 0.2f;
@@ -44,18 +45,21 @@ public class QLMaze : MonoBehaviour
         obstacles = new List<Tuple<int, int>>();
         foreach (GameObject obstacle in obstacles_go)
         {
+            // I'm really hoping that (int) gets the floor of the value...
             obstacles.Add(new Tuple<int, int>(
                 (int)obstacle.transform.position.x,
                 (int)obstacle.transform.position.z));
         }
 
         // Initialize Q-learning variables
-        q_table = new Dictionary<Tuple<int, int>, Dictionary<string, float>>();
+        // q_table = new Dictionary<Tuple<int, int>, Dictionary<string, float>>();  // lmao nope
+        q_table = new Dictionary<string, Dictionary<string, float>>();
         for (int i = 0; i < nx; i++)
         {
             for (int j = 0; j < ny; j++)
             {
-                Tuple<int, int> state = new Tuple<int, int>(i, j);
+                // Tuple<int, int> state = new Tuple<int, int>(i, j);  // this didn't work
+                string state = ConvertTupleToString(new Tuple<int, int>(i, j));
                 Dictionary<string, float> state_actions = new Dictionary<string, float>();
                 foreach (string action in actions)
                 {
@@ -133,7 +137,7 @@ public class QLMaze : MonoBehaviour
         foreach (string action in available_actions)
         {
             Tuple<int, int> next_pos = GetNextPosition(current_pos, action);
-            float q_value = GetQValue(current_pos, action);
+            float q_value = GetQValue(ConvertTupleToString(current_pos), action);
             if (q_value > best_q_value)
             {
                 best_action = action;
@@ -199,7 +203,8 @@ public class QLMaze : MonoBehaviour
         return new Tuple<int, int>(x, y);
     }
 
-    float GetQValue(Tuple<int, int> state, string action)
+    // float GetQValue(Tuple<int, int> state, string action)
+    float GetQValue(string state, string action)
     {
         // Get Q-value for given state-action pair
         Dictionary<string, float> state_actions = q_table[state];
@@ -226,14 +231,14 @@ public class QLMaze : MonoBehaviour
     void UpdateQTable(Tuple<int, int> state, Tuple<int, int> next_state, float reward)
     {
         // Update Q-table using Q-learning algorithm
-        float q_value = GetQValue(state, MagicStringConversion(state, GetBestAction()));
-        float max_q_value = GetQValue(next_state, MagicStringConversion(next_state, GetBestAction()));
+        float q_value = GetQValue(ConvertTupleToString(state), GetProjectedDirection(state, GetBestAction()));
+        float max_q_value = GetQValue(ConvertTupleToString(next_state), GetProjectedDirection(next_state, GetBestAction()));
         float updated_q_value = q_value + learning_rate * (reward + discount_factor * max_q_value - q_value);
-        q_table[state][MagicStringConversion(state, GetBestAction())] = updated_q_value;
+        q_table[ConvertTupleToString(state)][GetProjectedDirection(state, GetBestAction())] = updated_q_value;
     }
 
-    // Uhhhhh honestly I dunno man.
-    string MagicStringConversion(Tuple<int, int> curr, Tuple<int, int> best_action) {
+    // Parse the direction based on the next move
+    string GetProjectedDirection(Tuple<int, int> curr, Tuple<int, int> best_action) {
         int sx = curr.Item1;
         int sz = curr.Item2;
 
@@ -258,5 +263,11 @@ public class QLMaze : MonoBehaviour
         }
 
         return "panic";  // this will break things
+    }
+
+    // Turns out that you can't use tuples as hash values / keys or things break
+    string ConvertTupleToString(Tuple<int, int> tup)
+    {
+        return $"{tup.Item1},{tup.Item2}";
     }
 }
