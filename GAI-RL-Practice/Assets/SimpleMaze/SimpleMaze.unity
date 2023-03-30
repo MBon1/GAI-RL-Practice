@@ -877,6 +877,9 @@ MonoBehaviour:
   - {fileID: 722736603}
   - {fileID: 1014981374}
   - {fileID: 2044173089}
+  max_steps: 100
+  max_iterations: 100
+  report_on_iteration: 1
 --- !u!65 &312095672
 BoxCollider:
   m_ObjectHideFlags: 0

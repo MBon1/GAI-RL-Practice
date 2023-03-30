@@ -34,12 +34,18 @@ public class QLMaze : MonoBehaviour
     /* ASSIGNMENT: only call Update() x times per second */
 
     // Episode regulation variables
-    int max_steps = 500;
+    public int max_steps = 500;
     int curr_step = 0;
 
     // Iterations
     public int max_iterations = 20;
     int curr_iterations = 0;
+
+    // Data Reporting
+    public int report_on_iteration = 5;
+    string file_path = "";
+    float iteration_reward = 0;
+    float[] iteration_rewards;
 
     void Start()
     {
@@ -77,17 +83,22 @@ public class QLMaze : MonoBehaviour
 
         // Initialize agent variables
         current_pos = start_pos;
+
+        // Set Up File I/O for data reporting
+        SetUpIO();
+        iteration_rewards = new float[report_on_iteration];
     }
 
     void Update()
     {
-        if (max_iterations <= curr_iterations)
+        if (max_iterations < curr_iterations)
         {
             return;
         }
         // Update agent position and Q-learning table
         Tuple<int, int> next_pos = ChooseAction();
         float reward = GetReward(next_pos);
+        iteration_reward += reward;
         UpdateQTable(current_pos, next_pos, reward);
         current_pos = next_pos;
         agent.transform.position = new Vector3(current_pos.Item1 + 0.5f, 0.5f, current_pos.Item2 + 0.5f);
@@ -111,8 +122,11 @@ public class QLMaze : MonoBehaviour
         // Restart the episode
         if (restart_needed)
         {
+            iteration_rewards[curr_iterations % report_on_iteration] = iteration_reward;
+            UpdateIterationResults();
             curr_step = 0;
             current_pos = new Tuple<int, int>(0, 0);
+            iteration_reward = 0;
             curr_iterations++;
         }
     }
@@ -290,5 +304,47 @@ public class QLMaze : MonoBehaviour
     string ConvertTupleToString(Tuple<int, int> tup)
     {
         return $"{tup.Item1},{tup.Item2}";
+    }
+
+    void SetUpIO()
+    {
+        string directory = Application.dataPath + "/Results";
+        System.IO.Directory.CreateDirectory(directory);
+        System.DateTime dt = System.DateTime.Now;
+        file_path = directory + "/q-l-maze-cumulative-reward" + dt.Year + " -" + dt.Month + "-" + dt.Day + "-" + dt.Hour + "-" + dt.Minute + "-" + dt.Second + ".csv";
+        Debug.Log(file_path);
+
+        string header = "Steps,Environment/Cumulative Reward";
+        AppendDataToFile(header);
+    }
+
+    void AppendDataToFile(float reward)
+    {
+        // Steps
+        // Environment/Cumulative Reward
+        string contents = $"{curr_iterations},{reward}";
+
+        AppendDataToFile(contents);
+    }
+
+    void AppendDataToFile(string contents)
+    {
+        System.IO.File.AppendAllText(file_path, contents + "\n");
+    }
+
+    void UpdateIterationResults()
+    {
+        // Check if results should be reported
+        if ((curr_iterations > 0 && curr_iterations % report_on_iteration == 0) || curr_iterations == max_iterations)
+        {
+            float sum = 0;
+
+            for (int i = 0; i < report_on_iteration; i++)
+            {
+                sum += iteration_rewards[i];
+            }
+            AppendDataToFile(sum / report_on_iteration);
+            iteration_rewards = new float[report_on_iteration];
+        }
     }
 }
