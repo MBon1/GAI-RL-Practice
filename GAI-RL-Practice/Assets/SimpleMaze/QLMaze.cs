@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class QLMaze : MonoBehaviour
 {
+    const string PANIC = "panic";
+
     // Q-learning variables
     // private Dictionary<Tuple<int, int>, Dictionary<string, float>> q_table;  // lmao this did not work
     private Dictionary<string, Dictionary<string, float>> q_table;
@@ -32,7 +34,7 @@ public class QLMaze : MonoBehaviour
     /* ASSIGNMENT: only call Update() x times per second */
 
     // Episode regulation variables
-    int max_steps = 100;
+    int max_steps = 500;
     int curr_step = 0;
 
     void Start()
@@ -231,8 +233,14 @@ public class QLMaze : MonoBehaviour
     void UpdateQTable(Tuple<int, int> state, Tuple<int, int> next_state, float reward)
     {
         // Update Q-table using Q-learning algorithm
-        float q_value = GetQValue(ConvertTupleToString(state), GetProjectedDirection(state, GetBestAction()));
-        float max_q_value = GetQValue(ConvertTupleToString(next_state), GetProjectedDirection(next_state, GetBestAction()));
+        string qKey = GetProjectedDirection(state, GetBestAction());
+        if (qKey == PANIC)
+            return;
+        float q_value = GetQValue(ConvertTupleToString(state), qKey);
+        qKey = GetProjectedDirection(next_state, GetBestAction());
+        if (qKey == PANIC)
+            return;
+        float max_q_value = GetQValue(ConvertTupleToString(next_state), qKey);
         float updated_q_value = q_value + learning_rate * (reward + discount_factor * max_q_value - q_value);
         q_table[ConvertTupleToString(state)][GetProjectedDirection(state, GetBestAction())] = updated_q_value;
     }
@@ -265,8 +273,8 @@ public class QLMaze : MonoBehaviour
         }
 
         // Something has gone wrong
-        Debug.Log("panic");
-        return "panic";
+        Debug.Log(PANIC);
+        return PANIC;
     }
 
     // Turns out that you can't use tuples as hash values / keys or things break
