@@ -184,7 +184,7 @@ public class QLHallway : MonoBehaviour
         foreach (string action in available_actions)
         {
             Tuple<int, int> next_pos = GetNextPosition(curr_pos, action);
-            float q_value = GetQValue(ConvertTupleToString(curr_pos), action);
+            float q_value = GetQValue(GenerateState(curr_pos, blue_is_a, blue_is_goal), action);
             if (q_value > best_q_value)
             {
                 best_action = action;
@@ -262,7 +262,9 @@ public class QLHallway : MonoBehaviour
         // Get reward for transitioning from current position to next position
         if (next_pos.Equals(goal_a_pos))
         {
-            if (blue_is_a && (blue_is_goal == 1)) {
+            if (blue_is_a && (blue_is_goal == 1))
+            {
+                // curr goal is A goal, A goal is blue, target is blue goal
                 return 100.0f;
             }
 
@@ -270,7 +272,9 @@ public class QLHallway : MonoBehaviour
         }
         else if (next_pos.Equals(goal_b_pos))
         {
-            if (! blue_is_a && (blue_is_goal == 1)) {
+            if (!blue_is_a && (blue_is_goal == 1))
+            {
+                // curr goal is B goal, B goal is blue, target is blue goal
                 return 100.0f;
             }
 
@@ -280,9 +284,11 @@ public class QLHallway : MonoBehaviour
         {
             return -1.0f;
         }
+
+        // NOTE THAT UNSURE GUESSES WHERE THE SIGN HAS NOT BEEN FOUND COUNT AS INCORRECT
     }
 
-    void UpdateQTable(Tuple<int, int> state, Tuple<int, int> next_state, float reward)
+    void UpdateQTable(Tuple<int, int> curr_pos, Tuple<int, int> next_pos, float reward)
     {
         // // Update Q-table using Q-learning algorithm
         // string qKey = GetProjectedDirection(state, GetBestAction(current_pos));
@@ -295,6 +301,19 @@ public class QLHallway : MonoBehaviour
         // float max_q_value = GetQValue(ConvertTupleToString(next_state), qKey);
         // float updated_q_value = q_value + learning_rate * (reward + discount_factor * max_q_value - q_value);
         // q_table[ConvertTupleToString(state)][GetProjectedDirection(state, GetBestAction(current_pos))] = updated_q_value;
+
+        string curr_state = GenerateState(curr_pos, blue_is_a, blue_is_goal);
+        string next_state = GenerateState(next_pos, blue_is_a, blue_is_goal);
+
+        // Debug.Log("Ahoy, matey!");
+
+        string qKey = GetProjectedDirection(curr_pos, GetBestAction(curr_pos));
+        float q_value = GetQValue(curr_state, qKey);
+        qKey = GetProjectedDirection(next_pos, GetBestAction(next_pos));
+        float max_q_value = GetQValue(next_state, qKey);
+        float updated_q_value = q_value + learning_rate * (reward + discount_factor * max_q_value - q_value);
+
+        q_table[curr_state][GetProjectedDirection(curr_pos, GetBestAction(curr_pos))] = updated_q_value;
     }
 
     // Parse the direction based on the next move
@@ -388,13 +407,13 @@ public class QLHallway : MonoBehaviour
 
         if (CoinFlipIsHeads())
         {
-            blue_goal.transform.position = new Vector3(goal_a_pos.Item1, 0.5f, goal_a_pos.Item2);
-            red_goal.transform.position = new Vector3(goal_b_pos.Item1, 0.5f, goal_b_pos.Item2);
+            blue_goal.transform.position = new Vector3(goal_a_pos.Item1 + 0.5f, 0.5f, goal_a_pos.Item2 + 0.5f);
+            red_goal.transform.position = new Vector3(goal_b_pos.Item1 + 0.5f, 0.5f, goal_b_pos.Item2 + 0.5f);
         }
         else
         {
-            blue_goal.transform.position = new Vector3(goal_b_pos.Item1, 0.5f, goal_b_pos.Item2);
-            red_goal.transform.position = new Vector3(goal_a_pos.Item1, 0.5f, goal_a_pos.Item2);
+            blue_goal.transform.position = new Vector3(goal_b_pos.Item1 + 0.5f, 0.5f, goal_b_pos.Item2 + 0.5f);
+            red_goal.transform.position = new Vector3(goal_a_pos.Item1 + 0.5f, 0.5f, goal_a_pos.Item2 + 0.5f);
         }
     }
 
