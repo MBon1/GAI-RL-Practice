@@ -24,8 +24,8 @@ public class QLMazeAgent2 : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         // Target and Agent positions
-        sensor.AddObservation(Target.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(Target.position);
+        sensor.AddObservation(this.transform.position);
 
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -47,20 +47,39 @@ public class QLMazeAgent2 : Agent
         // Reached target
         if (distanceToTarget < 1.42f)
         {
-            SetReward(1.0f);
+            SetReward(100f);
             EndEpisode();
+            return;
         }
 
         // Fell off platform
         if (this.transform.position.y < 0)
         {
             EndEpisode();
+            return;
         }
+
+        SetReward(-1);
     }
 
     public override void Heuristic(float[] actionsOut)
     {
         actionsOut[0] = Input.GetAxis("Horizontal");
         actionsOut[1] = Input.GetAxis("Vertical");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        {
+            SetReward(-100f);
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        {
+            SetReward(-100f);
+        }
     }
 }
