@@ -6,7 +6,7 @@ using Unity.MLAgents.Sensors;
 
 public class QLMaze_MLA_Agent : Agent
 {
-    private int nx = 10;
+    /*private int nx = 10;
     private int ny = 10;
 
     // Unity variables
@@ -121,5 +121,5 @@ public class QLMaze_MLA_Agent : Agent
 
         // Take step; punish by -1
         AddReward(-1);
-    }
+    }*/
 }
