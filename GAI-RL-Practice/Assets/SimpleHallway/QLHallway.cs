@@ -268,6 +268,11 @@ public class QLHallway : MonoBehaviour
                 Debug.Log("CORRECT");
                 return 100.0f;
             }
+            else if(!blue_is_a && (blue_is_goal == 0))
+            {
+                Debug.Log("CORRECT");
+                return 100.0f;
+            }
 
             return -100.0f;
         }
@@ -276,6 +281,11 @@ public class QLHallway : MonoBehaviour
             if (!blue_is_a && (blue_is_goal == 1))
             {
                 // curr goal is B goal, B goal is blue, target is blue goal
+                Debug.Log("CORRECT");
+                return 100.0f;
+            }
+            else if (blue_is_a && (blue_is_goal == 0))
+            {
                 Debug.Log("CORRECT");
                 return 100.0f;
             }
@@ -411,11 +421,13 @@ public class QLHallway : MonoBehaviour
         {
             blue_goal.transform.position = new Vector3(goal_a_pos.Item1 + 0.5f, 0.5f, goal_a_pos.Item2 + 0.5f);
             red_goal.transform.position = new Vector3(goal_b_pos.Item1 + 0.5f, 0.5f, goal_b_pos.Item2 + 0.5f);
+            blue_is_a = true;
         }
         else
         {
             blue_goal.transform.position = new Vector3(goal_b_pos.Item1 + 0.5f, 0.5f, goal_b_pos.Item2 + 0.5f);
             red_goal.transform.position = new Vector3(goal_a_pos.Item1 + 0.5f, 0.5f, goal_a_pos.Item2 + 0.5f);
+            blue_is_a = false;
         }
     }
 
@@ -448,7 +460,6 @@ public class QLHallway : MonoBehaviour
         RandomizeSignPosition();
         
         // Dammit
-        blue_is_a = CoinFlipIsHeads();
         blue_is_goal = 2;
         curr_step = 0;
     }
@@ -498,16 +509,16 @@ public class QLHallway : MonoBehaviour
     {
         // Report 0 (sign is red), 1 (sign is blue), or 2 (no sign is visible)
 
-        if (subject_space == sign_pos)
+        if (subject_space.Equals(sign_pos))
         {
             int ssx = subject_space.Item1;
             int ssz = subject_space.Item2;
 
             int bsx = (int) blue_sign.transform.position.x;
-            int bsz = (int) blue_sign.transform.position.x;
+            int bsz = (int) blue_sign.transform.position.z;
 
             int rsx = (int) red_sign.transform.position.x;
-            int rsz = (int) red_sign.transform.position.x;
+            int rsz = (int) red_sign.transform.position.z;
 
             if (ssx == bsx && ssz == bsz)
             {
