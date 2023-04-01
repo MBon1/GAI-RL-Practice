@@ -217,10 +217,10 @@ public class QLHallway : MonoBehaviour
             return false;
         }
 
-        if (pos.Equals(sign_pos))
-        {
-            return false;  // Thanks for the idea, ChatGPT!
-        }
+        // if (pos.Equals(sign_pos))
+        // {
+        //     return false;  // Thanks for the idea, ChatGPT!
+        // }
 
         return true;
     }
@@ -265,6 +265,7 @@ public class QLHallway : MonoBehaviour
             if (blue_is_a && (blue_is_goal == 1))
             {
                 // curr goal is A goal, A goal is blue, target is blue goal
+                Debug.Log("CORRECT");
                 return 100.0f;
             }
 
@@ -275,6 +276,7 @@ public class QLHallway : MonoBehaviour
             if (!blue_is_a && (blue_is_goal == 1))
             {
                 // curr goal is B goal, B goal is blue, target is blue goal
+                Debug.Log("CORRECT");
                 return 100.0f;
             }
 
