@@ -1245,5 +1245,5 @@ MonoBehaviour:
   blue_goal: {fileID: 1728091859}
   red_goal: {fileID: 1321991631}
   max_steps: 50
-  max_iterations: 20
-  report_on_iteration: 5
+  max_iterations: 1000
+  report_on_iteration: 10
