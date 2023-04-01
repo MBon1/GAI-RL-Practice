@@ -11,21 +11,21 @@ public class QLMazeAgent2 : Agent
 
     void Start()
     {
-        originPosition = this.transform.position;
+        originPosition = this.transform.localPosition;
         rBody = GetComponent<Rigidbody>();
     }
 
     public Transform Target;
     public override void OnEpisodeBegin()
     {
-        this.transform.position = originPosition;
+        this.transform.localPosition = originPosition;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Target and Agent positions
-        sensor.AddObservation(Target.position);
-        sensor.AddObservation(this.transform.position);
+        sensor.AddObservation(Target.localPosition);
+        sensor.AddObservation(this.transform.localPosition);
 
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -42,7 +42,7 @@ public class QLMazeAgent2 : Agent
         rBody.AddForce(controlSignal * speed);
 
         // Rewards
-        float distanceToTarget = Vector3.Distance(this.transform.position, Target.position);
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
 
         // Reached target
         if (distanceToTarget < 1.42f)
@@ -53,7 +53,7 @@ public class QLMazeAgent2 : Agent
         }
 
         // Fell off platform
-        if (this.transform.position.y < 0)
+        if (this.transform.localPosition.y < 0)
         {
             EndEpisode();
             return;
