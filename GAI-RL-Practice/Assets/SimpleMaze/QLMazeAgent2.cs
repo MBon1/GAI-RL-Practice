@@ -56,7 +56,6 @@ public class QLMazeAgent2 : Agent
         if (this.transform.localPosition.y < 0)
         {
             EndEpisode();
-            return;
         }
 
         SetReward(-1);

@@ -46,14 +46,25 @@ public class QLMazeAgent3 : Agent
         // Reached target
         if (distanceToTarget < 1.42f)
         {
-            SetReward(1.0f);
+            SetReward(100.0f);
             EndEpisode();
         }
 
-        // Fell off platform
-        if (this.transform.localPosition.y < 0)
+        //SetReward(-1.0f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
         {
-            EndEpisode();
+            SetReward(-100.0f);
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        {
+            SetReward(-100.0f);
         }
     }
 

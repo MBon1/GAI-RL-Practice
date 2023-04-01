@@ -1,0 +1,46 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1680366758",
+        "python_version": "3.7.16 (default, Jan 17 2023, 16:06:28) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Matthew\\AppData\\Local\\Continuum\\miniconda3\\envs\\ml-agents-1.0.8\\Scripts\\mlagents-learn .\\trainer_config.yaml --run-id maze_02_reward_10 --force",
+        "mlagents_version": "0.16.1",
+        "mlagents_envs_version": "0.16.1",
+        "communication_protocol_version": "1.0.0",
+        "tensorflow_version": "2.11.0",
+        "end_time_seconds": "1680366771"
+    },
+    "total": 12.3579409,
+    "count": 1,
+    "self": 0.2840892999999962,
+    "children": {
+        "run_training.setup": {
+            "total": 0.018622399999999928,
+            "count": 1,
+            "self": 0.018622399999999928
+        },
+        "TrainerController.start_learning": {
+            "total": 12.055229200000003,
+            "count": 1,
+            "self": 0.0017689000000018495,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 12.0507278,
+                    "count": 1,
+                    "self": 12.0507278
+                },
+                "trainer_threads": {
+                    "total": 2.0000000020559128e-06,
+                    "count": 1,
+                    "self": 2.0000000020559128e-06
+                },
+                "TrainerController._save_model": {
+                    "total": 0.0027304999999984148,
+                    "count": 1,
+                    "self": 0.0027304999999984148
+                }
+            }
+        }
+    }
+}
