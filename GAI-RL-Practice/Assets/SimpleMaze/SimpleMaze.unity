@@ -869,6 +869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c874c0088656dcf47935816a9baf87c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  learning_rate: 0.8
+  discount_factor: 0.95
+  exploration_rate: 0.2
   agent: {fileID: 312095670}
   goal: {fileID: 1487718136}
   obstacles_go:

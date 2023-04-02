@@ -10,9 +10,9 @@ public class QLMaze : MonoBehaviour
     // Q-learning variables
     // private Dictionary<Tuple<int, int>, Dictionary<string, float>> q_table;  // lmao this did not work
     private Dictionary<string, Dictionary<string, float>> q_table;
-    private float learning_rate = 0.8f;
-    private float discount_factor = 0.95f;
-    private float exploration_rate = 0.2f;
+    public float learning_rate = 0.8f;
+    public float discount_factor = 0.95f;
+    public float exploration_rate = 0.2f;
 
     // Maze variables
     private int nx;
