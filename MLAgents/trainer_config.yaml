@@ -43,3 +43,15 @@ QLMaze:
             strength: 1.0
             gamma: 0.95
 
+Hallway:
+    beta: 0.01
+    time_horizon: 128
+    batch_size: 2048
+    buffer_size: 20480
+    hidden_units: 256
+    max_steps: 5.0e6
+    memory_size: 256
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.95
