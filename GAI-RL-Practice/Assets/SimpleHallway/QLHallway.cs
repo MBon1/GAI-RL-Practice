@@ -371,7 +371,7 @@ public class QLHallway : MonoBehaviour
         string directory = Application.dataPath + "/Results/QLHallway";
         System.IO.Directory.CreateDirectory(directory);
         System.DateTime dt = System.DateTime.Now;
-        file_path = directory + "/q-l-maze-cumulative-reward" + dt.Year + " -" + dt.Month + "-" + dt.Day + "-" + dt.Hour + "-" + dt.Minute + "-" + dt.Second + ".csv";
+        file_path = directory + "/QLHallway_" + dt.Year + " -" + dt.Month + "-" + dt.Day + "-" + dt.Hour + "-" + dt.Minute + "-" + dt.Second + ".csv";
         Debug.Log(file_path);
 
         string header = "Steps,Environment/Cumulative Reward";
