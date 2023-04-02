@@ -31,7 +31,7 @@ Hummingbird:
     max_steps: 5.0e6
 
 QLMaze:
-    time_horizon: 128
+    time_horizon: 64
     batch_size: 2048
     buffer_size: 20480
     hidden_units: 256

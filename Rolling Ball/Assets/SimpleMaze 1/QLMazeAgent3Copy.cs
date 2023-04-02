@@ -4,21 +4,20 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
 
-public class QLMazeAgent2 : Agent
+public class QLMazeAgent3Copy : Agent
 {
     private Rigidbody rBody;
-    private Vector3 originPosition;
-
+    private Vector3 startPosition;
     void Start()
     {
-        originPosition = this.transform.localPosition;
+        startPosition = this.transform.localPosition;
         rBody = GetComponent<Rigidbody>();
     }
 
     public Transform Target;
     public override void OnEpisodeBegin()
     {
-        this.transform.localPosition = originPosition;
+        this.transform.localPosition = startPosition;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -47,38 +46,31 @@ public class QLMazeAgent2 : Agent
         // Reached target
         if (distanceToTarget < 1.42f)
         {
-            SetReward(100f);
-            EndEpisode();
-            return;
-        }
-
-        // Fell off platform
-        if (this.transform.localPosition.y < 0)
-        {
+            SetReward(100.0f);
             EndEpisode();
         }
 
-        SetReward(-1);
-    }
-
-    public override void Heuristic(float[] actionsOut)
-    {
-        actionsOut[0] = Input.GetAxis("Horizontal");
-        actionsOut[1] = Input.GetAxis("Vertical");
+        //SetReward(-1.0f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
         {
-            SetReward(-100f);
+            SetReward(-100.0f);
         }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
         {
-            SetReward(-100f);
+            SetReward(-100.0f);
         }
+    }
+
+    public override void Heuristic(float[] actionsOut)
+    {
+        actionsOut[0] = Input.GetAxis("Horizontal");
+        actionsOut[1] = Input.GetAxis("Vertical");
     }
 }

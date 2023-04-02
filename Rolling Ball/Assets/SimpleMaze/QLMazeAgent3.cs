@@ -18,6 +18,8 @@ public class QLMazeAgent3 : Agent
     public override void OnEpisodeBegin()
     {
         this.transform.localPosition = startPosition;
+        rBody.velocity = Vector3.zero;
+        rBody.angularVelocity= Vector3.zero;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -44,29 +46,52 @@ public class QLMazeAgent3 : Agent
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
 
         // Reached target
-        if (distanceToTarget < 1.42f)
+        /*if (distanceToTarget < 1.42f)
         {
-            SetReward(100.0f);
+            AddReward(100.0f);
             EndEpisode();
-        }
+        }*/
 
-        //SetReward(-1.0f);
+        AddReward(-0.001f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        if (collision.collider.CompareTag("wall"))
         {
-            SetReward(-100.0f);
+            AddReward(-0.5f);
         }
+
+        if (collision.collider.CompareTag("target"))
+        {
+            AddReward(100.0f);
+            EndEpisode();
+        }
+
+        /*if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        {
+            AddReward(-0.5f);
+            //EndEpisode();
+        }*/
     }
-    private void OnCollisionStay(Collision collision)
+
+    /*private void OnCollisionStay(Collision collision)
+    {
+        if (LayerMask.NameToLayer("Obstacle") == collision.gameObject.layer ||
+            LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        {
+            AddReward(-1.0f);
+            EndEpisode();
+        }
+    }*/
+
+    /*private void OnCollisionStay(Collision collision)
     {
         if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
         {
             SetReward(-100.0f);
         }
-    }
+    }*/
 
     public override void Heuristic(float[] actionsOut)
     {

@@ -4,8 +4,10 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
 
-public class QLMazeAgent3 : Agent
+public class QLMazeAgent4 : Agent
 {
+    public Transform Target;
+    public Transform[] Obstacles;
     private Rigidbody rBody;
     private Vector3 startPosition;
     void Start()
@@ -14,12 +16,11 @@ public class QLMazeAgent3 : Agent
         rBody = GetComponent<Rigidbody>();
     }
 
-    public Transform Target;
     public override void OnEpisodeBegin()
     {
         this.transform.localPosition = startPosition;
         rBody.velocity = Vector3.zero;
-        rBody.angularVelocity= Vector3.zero;
+        rBody.angularVelocity = Vector3.zero;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -27,6 +28,11 @@ public class QLMazeAgent3 : Agent
         // Target and Agent positions
         sensor.AddObservation(Target.localPosition);
         sensor.AddObservation(this.transform.localPosition);
+
+        foreach (Transform obstacle in Obstacles)
+        {
+            sensor.AddObservation(obstacle.localPosition);
+        }
 
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -43,7 +49,7 @@ public class QLMazeAgent3 : Agent
         rBody.AddForce(controlSignal * speed);
 
         // Rewards
-        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
+        /*float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);*/
 
         // Reached target
         /*if (distanceToTarget < 1.42f)
@@ -64,7 +70,7 @@ public class QLMazeAgent3 : Agent
 
         if (collision.collider.CompareTag("target"))
         {
-            AddReward(100.0f);
+            AddReward(10.0f);
             EndEpisode();
         }
 

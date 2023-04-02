@@ -4,7 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
 
-public class QLMazeAgent2 : Agent
+public class QLMazeAgent2Copy : Agent
 {
     private Rigidbody rBody;
     private Vector3 originPosition;
@@ -56,6 +56,7 @@ public class QLMazeAgent2 : Agent
         if (this.transform.localPosition.y < 0)
         {
             EndEpisode();
+            return;
         }
 
         SetReward(-1);
