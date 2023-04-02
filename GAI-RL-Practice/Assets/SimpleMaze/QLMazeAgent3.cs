@@ -46,20 +46,26 @@ public class QLMazeAgent3 : Agent
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
 
         // Reached target
-        if (distanceToTarget < 1.42f)
+        /*if (distanceToTarget < 1.42f)
         {
             AddReward(100.0f);
             EndEpisode();
-        }
+        }*/
 
         AddReward(-0.001f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (LayerMask.NameToLayer("Obstacle") == collision.gameObject.layer)
+        if (collision.collider.CompareTag("wall"))
         {
             AddReward(-0.5f);
+        }
+
+        if (collision.collider.CompareTag("target"))
+        {
+            AddReward(100.0f);
+            EndEpisode();
         }
 
         /*if (LayerMask.NameToLayer("Wall") == collision.gameObject.layer)

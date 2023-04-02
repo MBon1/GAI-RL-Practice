@@ -31,12 +31,11 @@ Hummingbird:
     max_steps: 5.0e6
 
 QLMaze:
-    time_horizon: 100
+    time_horizon: 128
     batch_size: 2048
     buffer_size: 20480
     hidden_units: 256
-    max_steps: 2.0e3
-    learning_rate: 0.8
+    max_steps: 5.0e6
     epsilon: 0.2
     reward_signals:
         extrinsic:
