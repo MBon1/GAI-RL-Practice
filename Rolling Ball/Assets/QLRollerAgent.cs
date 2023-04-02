@@ -49,10 +49,10 @@ public class QLRollerAgent : MonoBehaviour
     void Start()
     {
         // Initialize maze variables
-        nx = 10; // set to desired size
-        ny = 10; // set to desired size
-        start_pos = new Tuple<int, int>(0, 0); // set to desired start position
-        goal_pos = new Tuple<int, int>(nx - 1, ny - 1); // set to desired goal position
+        nx = 15; // set to desired size
+        ny = 15; // set to desired size
+        start_pos = new Tuple<int, int>(UnityEngine.Random.Range(0, nx), UnityEngine.Random.Range(0, ny)); // set to desired start position
+        goal_pos = new Tuple<int, int>(Mathf.FloorToInt(goal.transform.position.x), Mathf.FloorToInt(goal.transform.position.z)); // set to desired goal position
 
         // Initialize Q-learning variables
         // q_table = new Dictionary<Tuple<int, int>, Dictionary<string, float>>();  // lmao nope
@@ -128,7 +128,7 @@ public class QLRollerAgent : MonoBehaviour
         iteration_rewards[curr_iterations % report_on_iteration] = iteration_reward;
         UpdateIterationResults();
         curr_step = 0;
-        current_pos = new Tuple<int, int>(0, 0);
+        current_pos = new Tuple<int, int>(UnityEngine.Random.Range(0, nx), UnityEngine.Random.Range(0, ny));
         iteration_reward = 0;
         curr_iterations++;
     }
