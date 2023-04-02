@@ -530,8 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1451729354}
   goal: {fileID: 190743921}
-  max_steps: 225
-  max_iterations: 2000
+  max_steps: 100
+  max_iterations: 1000000
   report_on_iteration: 5
 --- !u!1 &2143713896
 GameObject:

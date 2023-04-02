@@ -49,8 +49,8 @@ public class QLRollerAgent : MonoBehaviour
     void Start()
     {
         // Initialize maze variables
-        nx = 15; // set to desired size
-        ny = 15; // set to desired size
+        nx = 10; // set to desired size
+        ny = 10; // set to desired size
         start_pos = new Tuple<int, int>(UnityEngine.Random.Range(0, nx), UnityEngine.Random.Range(0, ny)); // set to desired start position
         goal_pos = new Tuple<int, int>(Mathf.FloorToInt(goal.transform.position.x), Mathf.FloorToInt(goal.transform.position.z)); // set to desired goal position
 
