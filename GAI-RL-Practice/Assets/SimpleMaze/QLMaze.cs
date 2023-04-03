@@ -122,6 +122,7 @@ public class QLMaze : MonoBehaviour
         // Restart the episode
         if (restart_needed)
         {
+            Debug.Log($"Episode: {curr_iterations}/{max_iterations}");
             iteration_rewards[curr_iterations % report_on_iteration] = iteration_reward;
             UpdateIterationResults();
             curr_step = 0;
