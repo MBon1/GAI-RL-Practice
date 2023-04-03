@@ -42,6 +42,31 @@ QLMaze:
             strength: 1.0
             gamma: 0.95
 
+QLMaze_2:
+    learning_rate: 0.8
+    time_horizon: 64
+    batch_size: 2048
+    buffer_size: 20480
+    hidden_units: 256
+    max_steps: 1.0e6
+    epsilon: 0.2
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.95
+
+QLMaze_3:
+    time_horizon: 64
+    batch_size: 2048
+    buffer_size: 20480
+    hidden_units: 256
+    max_steps: 1.0e6
+    epsilon: 0.2
+    reward_signals:
+        extrinsic:
+            strength: 1.0
+            gamma: 0.05
+
 Hallway:
     beta: 0.01
     time_horizon: 128
@@ -86,31 +111,6 @@ RollerBallMLA_3:
     buffer_size: 20480
     hidden_units: 256
     max_steps: 5.0e6
-    epsilon: 0.2
-    reward_signals:
-        extrinsic:
-            strength: 1.0
-            gamma: 0.05
-
-QLMaze_2:
-    learning_rate: 0.8
-    time_horizon: 64
-    batch_size: 2048
-    buffer_size: 20480
-    hidden_units: 256
-    max_steps: 1.0e6
-    epsilon: 0.2
-    reward_signals:
-        extrinsic:
-            strength: 1.0
-            gamma: 0.95
-
-QLMaze_3:
-    time_horizon: 64
-    batch_size: 2048
-    buffer_size: 20480
-    hidden_units: 256
-    max_steps: 1.0e6
     epsilon: 0.2
     reward_signals:
         extrinsic:
