@@ -1,0 +1,46 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1680480673",
+        "python_version": "3.7.3 (default, Apr 24 2019, 15:29:51) [MSC v.1915 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Matthew\\AppData\\Local\\Continuum\\miniconda3\\envs\\ml-agents-1.0\\Scripts\\mlagents-learn .\\trainer_config.yaml --run-id maze_alpha",
+        "mlagents_version": "0.16.1",
+        "mlagents_envs_version": "0.16.1",
+        "communication_protocol_version": "1.0.0",
+        "tensorflow_version": "2.11.0",
+        "end_time_seconds": "1680480686"
+    },
+    "total": 12.846313300000002,
+    "count": 1,
+    "self": 0.3387303999999993,
+    "children": {
+        "run_training.setup": {
+            "total": 0.07520420000000172,
+            "count": 1,
+            "self": 0.07520420000000172
+        },
+        "TrainerController.start_learning": {
+            "total": 12.432378700000001,
+            "count": 1,
+            "self": 0.003703400000002688,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 12.4263093,
+                    "count": 1,
+                    "self": 12.4263093
+                },
+                "trainer_threads": {
+                    "total": 1.7999999997186933e-06,
+                    "count": 1,
+                    "self": 1.7999999997186933e-06
+                },
+                "TrainerController._save_model": {
+                    "total": 0.0023641999999988172,
+                    "count": 1,
+                    "self": 0.0023641999999988172
+                }
+            }
+        }
+    }
+}
