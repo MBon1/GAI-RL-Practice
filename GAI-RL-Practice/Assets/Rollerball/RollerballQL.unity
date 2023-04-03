@@ -528,6 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f4f1fd061a49746a1a0bb0139b92a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  learning_rate: 0.8
+  discount_factor: 0.95
   agent: {fileID: 1451729354}
   goal: {fileID: 190743921}
   max_steps: 100
