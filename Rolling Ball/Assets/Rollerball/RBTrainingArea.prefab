@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: RollerBallMLA
+  m_BehaviorName: RollerBallMLA_3
   TeamId: 0
   m_UseChildSensors: 1
 --- !u!114 &6910353056934069336
