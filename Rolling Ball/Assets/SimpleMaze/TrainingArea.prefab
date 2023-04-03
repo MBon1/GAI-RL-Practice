@@ -44,17 +44,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: Rays
-  m_DetectableTags: []
+  m_DetectableTags:
+  - wall
   m_RaysPerDirection: 4
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0
-  m_RayLength: 1
+  m_RayLength: 1.5
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 819
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  rayMissColor: {r: 0, g: 0.27208948, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
 --- !u!1 &6056207247797895270
@@ -71,7 +72,7 @@ GameObject:
   - component: {fileID: 6056207247797895268}
   m_Layer: 8
   m_Name: Wall (South)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +165,7 @@ GameObject:
   - component: {fileID: 6056207247823377584}
   m_Layer: 9
   m_Name: Obstacle (4)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6056207247823377586}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 0.5, z: 9.5}
+  m_LocalPosition: {x: 4.5, y: 0.5, z: 9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6056207248605318043}
@@ -257,7 +258,7 @@ GameObject:
   - component: {fileID: 6056207248065113670}
   m_Layer: 8
   m_Name: Wall (East)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -350,7 +351,7 @@ GameObject:
   - component: {fileID: 6056207248265039896}
   m_Layer: 9
   m_Name: Obstacle (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -443,7 +444,7 @@ GameObject:
   - component: {fileID: 6056207248422882625}
   m_Layer: 9
   m_Name: Obstacle (2)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -536,7 +537,7 @@ GameObject:
   - component: {fileID: 6056207248478493247}
   m_Layer: 9
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -629,7 +630,7 @@ GameObject:
   - component: {fileID: 6056207248532421852}
   m_Layer: 0
   m_Name: Goal
-  m_TagString: Untagged
+  m_TagString: target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -852,6 +853,7 @@ GameObject:
   - component: {fileID: 6056207248656482991}
   - component: {fileID: 6056207248656482989}
   - component: {fileID: 6056207248656482988}
+  - component: {fileID: 983440594055536126}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -867,7 +869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6056207248656483156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0.55, y: 0.5, z: 0.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6056207247755928236}
@@ -965,13 +967,13 @@ MonoBehaviour:
   m_BrainParameters:
     VectorObservationSize: 8
     NumStackedVectorObservations: 1
-    VectorActionSize: 02000000
+    VectorActionSize: 030000000300000002000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 1
+    VectorActionSpaceType: 0
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: RollerBall
+  m_BehaviorName: QLMaze_3
   TeamId: 0
   m_UseChildSensors: 1
 --- !u!114 &6056207248656482989
@@ -989,7 +991,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 750
   Target: {fileID: 6056207248532421851}
   speed: 9
 --- !u!114 &6056207248656482988
@@ -1004,8 +1006,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 5
+  DecisionPeriod: 1
   TakeActionsBetweenDecisions: 1
+--- !u!114 &983440594055536126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6056207248656483156}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 1
+  DemonstrationName: QLAgentDemo
+  DemonstrationDirectory: Demos
 --- !u!1 &6056207248704136369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1037,7 @@ GameObject:
   - component: {fileID: 6056207248704136335}
   m_Layer: 9
   m_Name: Obstacle (3)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1113,7 +1130,7 @@ GameObject:
   - component: {fileID: 6056207249024256545}
   m_Layer: 8
   m_Name: Wall (West)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1244,7 +1261,7 @@ GameObject:
   - component: {fileID: 6056207249383864653}
   m_Layer: 8
   m_Name: Wall (North)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

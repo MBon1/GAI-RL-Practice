@@ -52,14 +52,14 @@ public class QLMazeAgent3 : Agent
             EndEpisode();
         }*/
 
-        AddReward(-0.001f);
+        AddReward(-1 / MaxStep);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("wall"))
         {
-            AddReward(-0.5f);
+            AddReward(-1f);
         }
 
         if (collision.collider.CompareTag("target"))
@@ -75,15 +75,13 @@ public class QLMazeAgent3 : Agent
         }*/
     }
 
-    /*private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if (LayerMask.NameToLayer("Obstacle") == collision.gameObject.layer ||
-            LayerMask.NameToLayer("Wall") == collision.gameObject.layer)
+        if (collision.collider.CompareTag("wall"))
         {
-            AddReward(-1.0f);
-            EndEpisode();
+            AddReward(-1f);
         }
-    }*/
+    }
 
     /*private void OnCollisionStay(Collision collision)
     {

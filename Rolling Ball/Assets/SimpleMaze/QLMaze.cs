@@ -10,9 +10,9 @@ public class QLMaze : MonoBehaviour
     // Q-learning variables
     // private Dictionary<Tuple<int, int>, Dictionary<string, float>> q_table;  // lmao this did not work
     private Dictionary<string, Dictionary<string, float>> q_table;
-    private float learning_rate = 0.8f;
-    private float discount_factor = 0.95f;
-    private float exploration_rate = 0.2f;
+    public float learning_rate = 0.8f;
+    public float discount_factor = 0.95f;
+    public float exploration_rate = 0.2f;
 
     // Maze variables
     private int nx;
@@ -122,6 +122,7 @@ public class QLMaze : MonoBehaviour
         // Restart the episode
         if (restart_needed)
         {
+            Debug.Log($"Episode: {curr_iterations}/{max_iterations}");
             iteration_rewards[curr_iterations % report_on_iteration] = iteration_reward;
             UpdateIterationResults();
             curr_step = 0;
@@ -311,7 +312,7 @@ public class QLMaze : MonoBehaviour
         string directory = Application.dataPath + "/Results/QLMaze";
         System.IO.Directory.CreateDirectory(directory);
         System.DateTime dt = System.DateTime.Now;
-        file_path = directory + "/q-l-maze-cumulative-reward" + dt.Year + " -" + dt.Month + "-" + dt.Day + "-" + dt.Hour + "-" + dt.Minute + "-" + dt.Second + ".csv";
+        file_path = directory + "/QLMaze_" + dt.Year + " -" + dt.Month + "-" + dt.Day + "-" + dt.Hour + "-" + dt.Minute + "-" + dt.Second + ".csv";
         Debug.Log(file_path);
 
         string header = "Steps,Environment/Cumulative Reward";

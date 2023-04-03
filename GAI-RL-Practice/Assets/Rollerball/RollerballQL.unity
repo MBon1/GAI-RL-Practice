@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   learning_rate: 0.8
-  discount_factor: 0.95
+  discount_factor: 0.05
   agent: {fileID: 1451729354}
   goal: {fileID: 190743921}
   max_steps: 100

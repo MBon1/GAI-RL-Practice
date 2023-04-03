@@ -869,6 +869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c874c0088656dcf47935816a9baf87c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  learning_rate: 0.8
+  discount_factor: 0.95
+  exploration_rate: 0.2
   agent: {fileID: 312095670}
   goal: {fileID: 1487718136}
   obstacles_go:
@@ -5664,7 +5667,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044173089}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.09068775, y: -2.1866488, z: 4.1801577}
+  m_LocalPosition: {x: -0.90931225, y: -2.1866488, z: 4.1801577}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 107686516}
