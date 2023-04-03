@@ -98,7 +98,7 @@ QLMaze_2:
     batch_size: 2048
     buffer_size: 20480
     hidden_units: 256
-    max_steps: 5.0e6
+    max_steps: 1.0e6
     epsilon: 0.2
     reward_signals:
         extrinsic:
@@ -110,7 +110,7 @@ QLMaze_3:
     batch_size: 2048
     buffer_size: 20480
     hidden_units: 256
-    max_steps: 5.0e6
+    max_steps: 1.0e6
     epsilon: 0.2
     reward_signals:
         extrinsic:
